@@ -353,3 +353,14 @@ a:hover { color: var(--red-text); }
   .fab-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) { .fab-messenger { transition: none; } }
+
+/* Hero headline — style I (sticker look, toned down) */
+.hero-title .ht-1, .hero-title .ht-2 { display: block; -webkit-text-stroke: 8px #0B0B0C; paint-order: stroke fill; }
+.hero-title .ht-1 { color: #FFFFFF; text-shadow: 7px 7px 0 var(--red); }
+.hero-title .ht-2 { color: #E8202A; text-shadow: 7px 7px 0 #8A8A90; }
+.hero-v3 h1.hero-title { text-shadow: none; }
+@media (max-width: 760px) {
+  .hero-title .ht-1, .hero-title .ht-2 { -webkit-text-stroke-width: 5px; }
+  .hero-title .ht-1 { text-shadow: 4px 4px 0 var(--red); }
+  .hero-title .ht-2 { text-shadow: 4px 4px 0 #8A8A90; }
+}
