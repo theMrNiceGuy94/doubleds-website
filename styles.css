@@ -261,16 +261,6 @@ a:hover { color: var(--red-text); }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-/* Booking pop-up */
-.book-dialog { border: 0; padding: 0; max-width: 480px; width: calc(100% - 32px); background: var(--panel); color: var(--text); border-top: 4px solid var(--red); box-shadow: 0 30px 80px rgba(0,0,0,.6); }
-.book-dialog::backdrop { background: rgba(0,0,0,.72); }
-.dialog-inner { position: relative; padding: 36px 32px 32px; display: flex; flex-direction: column; gap: 14px; }
-.dialog-inner h2 { margin: 0; font-family: var(--display); font-style: italic; font-weight: 900; font-size: 40px; line-height: 1; text-transform: uppercase; }
-.dialog-inner p { margin: 0; color: #E4E4E7; }
-.dialog-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-.dialog-actions .btn { width: 100%; min-height: 54px; font-size: 21px; }
-.dialog-close { position: absolute; top: 8px; right: 8px; width: 44px; height: 44px; border: 0; background: transparent; color: var(--muted); font-size: 30px; line-height: 1; cursor: pointer; }
-.dialog-close:hover { color: var(--text); }
 
 /* Real workshop photo strip */
 .photo-strip { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 4px solid var(--red); border-bottom: 4px solid var(--red); }
@@ -278,7 +268,6 @@ a:hover { color: var(--red-text); }
 @media (max-width: 760px) {
   .photo-strip { grid-template-columns: 1fr; }
   .photo-strip img { height: 220px; }
-  .dialog-inner h2 { font-size: 32px; }
 }
 
 /* ===== Version 3 (mix) additions ===== */

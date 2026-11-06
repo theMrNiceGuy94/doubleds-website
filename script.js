@@ -18,22 +18,6 @@
     });
   }
 
-  // "Book diagnostics" pop-up (online booking not live yet).
-  // Without JavaScript the buttons simply jump to the contact form.
-  var dlg = document.getElementById('book-dialog');
-  if (dlg && typeof dlg.showModal === 'function') {
-    document.querySelectorAll('[data-book]').forEach(function (b) {
-      b.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (nav) nav.classList.remove('open');
-        dlg.showModal();
-      });
-    });
-    dlg.addEventListener('click', function (e) {
-      if (e.target === dlg || e.target.closest('[data-close]')) dlg.close();
-    });
-  }
-
   // Footer year
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
