@@ -353,3 +353,29 @@ a:hover { color: var(--red-text); }
   .hero-title .ht-1 { text-shadow: 4px 4px 0 var(--red); }
   .hero-title .ht-2 { text-shadow: 4px 4px 0 #8A8A90; }
 }
+
+/* ===== Diagnostic price + real workshop photos (Nov 2026) ===== */
+.hero-price { margin: 18px 0 0; font-size: 17px; color: #E4E4E7; text-shadow: 0 2px 12px rgba(0,0,0,.8); }
+.hero-price strong { font-family: var(--display); font-style: italic; font-weight: 800; font-size: 24px; color: #fff; margin-left: 6px; white-space: nowrap; }
+.diag-box { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); background: var(--panel); border: 1px solid var(--line); box-shadow: 10px 10px 0 var(--red); }
+.diag-box > img { width: 100%; height: 100%; min-height: 340px; object-fit: cover; object-position: 40% center; }
+.diag-body { padding: 36px 40px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; justify-content: center; }
+.diag-kicker { margin: 0; font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .06em; text-transform: uppercase; color: var(--red-text); }
+.diag-body h3 { margin: 0; font-family: var(--display); font-style: italic; font-weight: 800; font-size: 38px; line-height: 1; text-transform: uppercase; }
+.diag-price { margin: 0; font-family: var(--display); font-style: italic; font-weight: 900; font-size: 64px; line-height: 1; }
+.diag-price span { font-size: 26px; font-weight: 700; color: var(--muted); }
+.diag-text { margin: 0 0 8px; color: #E4E4E7; font-size: 17px; }
+.about-v3 img.about-close { object-position: 60% center; }
+.cta-photo { position: relative; background: var(--red) url(images/real-mazda-wheel.jpg) center 80% / cover no-repeat; }
+.cta-photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(211,17,28,.94) 0%, rgba(211,17,28,.82) 45%, rgba(160,10,18,.55) 100%); }
+.cta-photo .cta-inner { position: relative; }
+@media (max-width: 760px) {
+  .hero-price { font-size: 15px; margin-top: 12px; }
+  .hero-price strong { font-size: 20px; }
+  .diag-box { grid-template-columns: 1fr; margin-top: 28px; box-shadow: 6px 6px 0 var(--red); }
+  .diag-box > img { min-height: 0; height: 210px; }
+  .diag-body { padding: 22px 18px 26px; }
+  .diag-body h3 { font-size: 28px; }
+  .diag-price { font-size: 50px; }
+  .diag-body .btn { width: 100%; }
+}
