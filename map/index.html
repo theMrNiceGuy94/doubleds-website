@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where our customers come from – Double D's Automotive</title>
+<meta name="description" content="Customers drive to our Mazda 2.2 diesel workshop in Woodchurch, Kent from all over the UK and Europe. See where they came from and what we fixed.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://doubledsautomotive.co.uk/map/">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700;1,800;1,900&family=Barlow:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/map/map.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="Double D's Automotive – home">
+      <img src="/images/logo.png" alt="Double D's Automotive" width="434" height="110">
+      <span class="tagline">MrNiceGuy's workshop</span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">
+      <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav class="main-nav" id="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#how">How it works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#videos">YouTube</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a class="btn btn-red" href="https://app.doubledsautomotive.co.uk/book" data-book>Book diagnostics</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="section cmap" id="customers" aria-labelledby="customers-title">
+  <div class="container">
+    <div class="section-title"><h2 id="customers-title">Where our customers drive in from</h2><span class="slashes" aria-hidden="true">//</span></div>
+    <p class="cm-lead">Most of our customers travel well over an hour to reach us in Woodchurch, Kent. Every pin is a real car we've worked on.</p>
+    <div data-customer-map></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-cols">
+    <div><h3>Our services</h3><ul><li>Diagnostics</li><li>Carbon cleaning</li><li>Exhaust camshafts</li><li>Head gaskets</li><li>Turbos</li><li>Oil strainer &amp; rod bearings</li><li>Servicing</li></ul></div>
+    <div><h3>Opening hours</h3><p>Mon–Fri 9am–5pm</p>
+      <div class="socials">
+        <a href="https://www.youtube.com/@MrNiceGuy94" target="_blank" rel="noopener" aria-label="MrNiceGuy on YouTube"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15V9l5.7 3z"/></svg></a>
+        <a href="https://www.facebook.com/MrNiceGuy9494" target="_blank" rel="noopener" aria-label="MrNiceGuy on Facebook"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v9h4v-9h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg></a>
+      </div>
+    </div>
+    <div><h3>Contact us</h3><p>Unit 2, Odden Farm<br>Woodchurch, Ashford<br>Kent TN26 3TQ</p><p><a href="/#contact">Send an enquiry</a></p></div>
+  </div>
+  <div class="container footer-inner footer-bottom">
+    <span>© <span id="year">2026</span> Double D's Automotive Ltd.</span>
+    <a href="/privacy.html">Privacy</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="/script.js" defer></script>
+<script src="/map/map.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+/* Customer map section (Double D's app, Business Rules 24). Works on its own page and can be dropped into the homepage. */
+.cmap { --y0:#FF5A5F; --cm-panel:#141416; --cm-line:#3A0D10; --cm-field:#4A4A50; --cm-muted:#C4C4C8; }
+.cmap .cm-lead { margin: 0 0 22px; max-width: 680px; font-size: 18px; line-height: 1.5; color: var(--cm-muted); }
+.cmap .cm-controls { display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.cmap .cm-tabs, .cmap .cm-years { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.cmap .cm-tab { min-height: 44px; padding: 8px 22px; border: none; cursor: pointer; display: flex; gap: 10px; align-items: center; font: italic 800 20px/1 var(--display); text-transform: uppercase; background: var(--text); color: var(--black); clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
+.cmap .cm-tab[aria-selected="true"] { background: var(--red); color: #fff; }
+.cmap .cm-tab .n { font: 600 13px/1 var(--body); padding: 3px 8px; border-radius: 999px; background: var(--black); color: #fff; }
+.cmap .cm-ylabel { font: italic 700 15px var(--display); text-transform: uppercase; color: var(--cm-muted); }
+.cmap .cm-chip { min-height: 44px; padding: 8px 14px; cursor: pointer; display: flex; gap: 8px; align-items: center; font: 600 14px var(--body); background: var(--cm-panel); color: var(--text); border: 1px solid var(--cm-field); }
+.cmap .cm-chip[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+.cmap .dot { width: 11px; height: 11px; border-radius: 999px; border: 1px solid var(--black); display: inline-block; flex: none; }
+.cmap .cm-row { display: flex; flex-wrap: wrap; gap: 22px; align-items: stretch; }
+.cmap .cm-mapcol { flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.cmap .cm-mapbox { position: relative; border: 1px solid var(--cm-line); }
+.cmap .cm-map { height: 620px; background: #0B0D12; }
+.cmap .leaflet-container { font-family: var(--body); background: #0B0D12; }
+.cmap .leaflet-control-zoom a { background: var(--black) !important; color: var(--text) !important; border-color: var(--cm-field) !important; width: 40px !important; height: 40px !important; line-height: 40px !important; border-radius: 0 !important; }
+.cmap .leaflet-bar { border: 1px solid var(--cm-field) !important; border-radius: 0 !important; box-shadow: none !important; }
+.cmap .leaflet-control-attribution { background: rgba(11,11,12,.8) !important; color: var(--cm-muted) !important; font-size: 11px; }
+.cmap .leaflet-control-attribution a { color: var(--cm-muted) !important; }
+.cmap .cm-hint { position: absolute; left: 50%; top: 12px; transform: translateX(-50%); z-index: 800; background: rgba(11,11,12,.88); border: 1px solid var(--cm-field); padding: 6px 12px; font-size: 13px; color: var(--cm-muted); pointer-events: none; transition: opacity .3s; white-space: nowrap; }
+.cmap .cm-back { position: absolute; left: 12px; bottom: 12px; z-index: 800; display: none; }
+.cmap .cm-back.on { display: flex; }
+.cmap .cm-back button { min-height: 44px; padding: 0 22px; border: none; cursor: pointer; background: var(--red); color: #fff; font: italic 800 18px var(--display); text-transform: uppercase; display: flex; align-items: center; gap: 8px; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
+.cmap .cm-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13px; color: var(--cm-muted); align-items: center; }
+.cmap .cm-legend > span, .cmap .cm-legend .ly { display: flex; gap: 6px; align-items: center; }
+.cmap .pin { width: 22px; height: 22px; border-radius: 999px; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.7); }
+.cmap .pin.wall { width: 16px; height: 16px; opacity: .9; }
+.cmap .pin.dim { background: #5A5A62 !important; border-color: #9A9AA2; width: 12px; height: 12px; opacity: .8; box-shadow: none; }
+.cmap .clu { display: flex; align-items: center; justify-content: center; border-radius: 999px; background: var(--cm-panel); color: #fff; border: 2px solid #fff; font: 600 13px var(--body); box-shadow: 0 2px 8px rgba(0,0,0,.7); }
+.cmap .clu.sel { background: var(--red); }
+.cmap .clu.dim { background: #2A2A30; color: var(--cm-muted); border-color: #8A8A92; opacity: .85; }
+.cmap .shop { display: flex; align-items: center; gap: 6px; pointer-events: none; }
+.cmap .shop .garage { display: block; width: 28px; height: 28px; flex: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,.7)); }
+.cmap .shop .lab { background: var(--black); border: 1px solid var(--red); padding: 3px 8px; font: italic 800 13px var(--display); text-transform: uppercase; white-space: nowrap; color: var(--text); }
+.cmap .cm-panel { flex: 1 1 320px; min-width: 0; background: var(--cm-panel); border: 1px solid var(--cm-line); padding: 20px; display: flex; flex-direction: column; gap: 16px; max-height: 672px; overflow: auto; }
+.cmap .ptitle { margin: 0; font: italic 900 30px/1 var(--display); text-transform: uppercase; }
+.cmap .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cmap .stat { background: var(--black); border: 1px solid var(--cm-field); padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+.cmap .stat b { font: italic 900 32px/1 var(--display); }
+.cmap .stat b.red { color: var(--red-text); }
+.cmap .stat small { font-size: 13px; color: var(--cm-muted); }
+.cmap .card { background: var(--black); border: 1px solid var(--cm-field); padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.cmap .card.dash { border-style: dashed; }
+.cmap .ytag { font-size: 12px; font-weight: 600; padding: 2px 8px; color: #0B0B0C; }
+.cmap .jobs { display: flex; flex-wrap: wrap; gap: 6px; }
+.cmap .job { background: rgba(211,17,28,.16); color: var(--red-text); padding: 3px 8px; font-size: 13px; font-weight: 600; }
+.cmap .gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.cmap .gal button { padding: 0; border: 1px solid var(--cm-field); background: #1C1C20; aspect-ratio: 1; cursor: pointer; overflow: hidden; }
+.cmap .gal img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cmap .muted { color: var(--cm-muted); }
+.cmap .x { width: 44px; height: 44px; flex: none; background: transparent; border: 1px solid var(--cm-field); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cmap .cta { border-top: 1px solid var(--cm-line); padding-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+.cm-lightbox { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,.9); display: none; align-items: center; justify-content: center; padding: 24px; }
+.cm-lightbox.on { display: flex; }
+.cm-lightbox img { max-width: min(900px, 92vw); max-height: 82vh; display: block; }
+.cm-lightbox button { position: absolute; top: 16px; right: 16px; width: 48px; height: 48px; background: var(--black); border: 1px solid #4A4A50; color: #fff; cursor: pointer; font-size: 20px; }
+.cmap .cm-empty { padding: 40px 20px; text-align: center; color: var(--cm-muted); }
+@media (max-width: 700px) { .cmap .cm-map { height: 440px; } .cmap .cm-tab { font-size: 17px; padding: 8px 16px; } .cmap .cm-panel { max-height: none; } }
