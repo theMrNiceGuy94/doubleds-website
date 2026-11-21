@@ -66,3 +66,44 @@
       });
   });
 })();
+
+// Jobs we've done — load and play each loop only while it's on screen; count the numbers up once
+(function () {
+  var grid = document.querySelector('.jobs-grid');
+  if (!grid) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var videos = grid.querySelectorAll('video[data-src]');
+  var nums = grid.querySelectorAll('[data-count]');
+  if (!('IntersectionObserver' in window)) {
+    if (!reduce) videos.forEach(function (v) { v.src = v.dataset.src; v.play().catch(function () {}); });
+    return;
+  }
+  if (!reduce) {
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) {
+          if (!v.src) { v.src = v.dataset.src; }
+          var p = v.play(); if (p && p.catch) p.catch(function () {});
+        } else if (v.src) { v.pause(); }
+      });
+    }, { rootMargin: '200px 0px' });
+    videos.forEach(function (v) { vio.observe(v); });
+  }
+  if (reduce) return;
+  var counted = false;
+  var nio = new IntersectionObserver(function (entries) {
+    if (counted || !entries.some(function (e) { return e.isIntersecting; })) return;
+    counted = true; nio.disconnect();
+    var start = null, dur = 1600;
+    function tick(t) {
+      if (start === null) start = t;
+      var k = Math.min(1, (t - start) / dur), ease = 1 - Math.pow(1 - k, 3);
+      nums.forEach(function (n) { n.textContent = Math.round(+n.dataset.count * ease); });
+      if (k < 1) requestAnimationFrame(tick);
+    }
+    nums.forEach(function (n) { n.textContent = '0'; });
+    requestAnimationFrame(tick);
+  }, { threshold: 0.25 });
+  nio.observe(grid);
+})();
