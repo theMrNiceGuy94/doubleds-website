@@ -138,11 +138,12 @@
       var list = items.filter(function (p) { return p.region === state.region && count(p); });
       var towns = {}; list.forEach(function (p) { towns[townKey(p)] = p; });
       var far = null;
-      Object.keys(towns).forEach(function (k) { var p = towns[k]; var d = crow([p.lat, p.lng], state.shop); if (!far || d > far.d) far = { d: d, p: p }; });
+      var road = {}; list.forEach(function (p) { if (p.miles != null) road[townKey(p)] = p.miles; });
+      Object.keys(towns).forEach(function (k) { var p = towns[k]; var d = road[k] != null ? road[k] : crow([p.lat, p.lng], state.shop); if (!far || d > far.d) far = { d: d, p: p, road: road[k] != null }; });
       var name = { uk: 'Customers from around the UK', eu: 'Customers from Europe', intl: 'International' }[state.region];
       panel.innerHTML = '<p class="ptitle" style="font-size:24px">' + name + (state.year >= 0 ? ' · ' + esc(YL[state.year]) : '') + '</p>' +
         '<div class="grid2"><div class="stat"><b>' + list.length + '</b><small>customers</small></div><div class="stat"><b>' + Object.keys(towns).length + '</b><small>towns and cities</small></div></div>' +
-        (far ? '<div style="display:flex;flex-direction:column;gap:4px"><span class="cm-ylabel">Furthest</span><span>' + esc(far.p.town) + ' · about ' + fmt(far.d) + ' miles away</span></div>' : '') +
+        (far ? '<div style="display:flex;flex-direction:column;gap:4px"><span class="cm-ylabel">Furthest</span><span>' + esc(far.p.town) + ' · ' + fmt(far.d) + (far.road ? ' miles by road' : ' miles away') + '</span></div>' : '') +
         '<p class="muted" style="margin:0;font-size:14px;line-height:1.5">Zoom in or click a group to split it into single customers. Click a pin to see their journey. While one is open, click a grey pin to switch, or an empty bit of the map to see everyone again.</p>' +
         '<div class="cta"><span class="cm-ylabel" style="color:var(--text);font-size:18px">Been to see us?</span><span class="muted" style="font-size:14px;line-height:1.5">After your visit we email you a personal link to add your pin and photos of your car. Only real customers can add one, and David checks every pin and photo before it shows.</span></div>';
       return;
