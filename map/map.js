@@ -88,7 +88,7 @@
     state.sel = key; draw(); routeL.clearLayers();
     var group = state.data.items.filter(function (p) { return townKey(p) === key; });
     var first = group[0];
-    var withRoute = group.filter(function (p) { return !p.wall && p.hasRoute; })[0];
+    var withRoute = group.filter(function (p) { return !p.wall && p.hasRoute; })[0] || group.filter(function (p) { return p.wall && p.routeId; })[0];
     var flew = group.some(function (p) { return p.flewOut || p.region === 'intl'; });
     var drawLine = function (line, dashed) {
       L.polyline(line, { color: '#0B0B0C', weight: 8, opacity: 0.9, interactive: false }).addTo(routeL);
@@ -97,7 +97,7 @@
     };
     var straight = [[first.lat, first.lng], state.shop];
     if (withRoute) {
-      fetch(API + '/api/map/route/' + withRoute.id).then(function (r) { return r.ok ? r.json() : null; }).then(function (g) {
+      fetch(API + '/api/map/route/' + (withRoute.wall ? withRoute.routeId : withRoute.id)).then(function (r) { return r.ok ? r.json() : null; }).then(function (g) {
         if (state.sel !== key) return;
         drawLine(g && g.coordinates ? g.coordinates.map(function (c) { return [c[1], c[0]]; }) : straight, !g);
       }, function () { drawLine(straight, true); });
@@ -151,7 +151,7 @@
     var any = items.filter(function (p) { return townKey(p) === state.sel; })[0];
     var named = group.filter(function (p) { return !p.wall; });
     var wall = group.filter(function (p) { return p.wall; });
-    var best = named.filter(function (p) { return p.miles != null; })[0];
+    var best = named.filter(function (p) { return p.miles != null; })[0] || items.filter(function (p) { return p.wall && townKey(p) === state.sel && p.miles != null; })[0];
     var flew = items.some(function (p) { return townKey(p) === state.sel && (p.flewOut || p.region === 'intl'); });
     var miles = best ? best.miles : crow([any.lat, any.lng], state.shop);
     var h = '<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div style="display:flex;flex-direction:column;gap:4px"><p class="ptitle">' + esc(any.town) + '</p><span class="muted" style="font-size:14px">' + group.length + (group.length === 1 ? ' customer' : ' customers') + (state.year >= 0 ? (YEARS[state.year].y === NOW ? ' this year' : ' in ' + YEARS[state.year].y) : '') + '</span></div><button type="button" class="x" aria-label="Close">✕</button></div>';
@@ -183,7 +183,7 @@
   fetch(API + '/api/map/data').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (d) {
     if (d.workshop) state.shop = [d.workshop.lat, d.workshop.lng];
     var items = d.pins.map(function (p) { return Object.assign({ wall: false }, p); })
-      .concat(d.wall.map(function (w) { return { wall: true, town: w.town, region: w.region, lat: w.lat, lng: w.lng, year: w.year, jobs: [], photos: [] }; }));
+      .concat(d.wall.map(function (w) { return { wall: true, town: w.town, region: w.region, lat: w.lat, lng: w.lng, year: w.year, jobs: [], photos: [], routeId: w.routeId || null, miles: w.miles == null ? null : w.miles, minutes: w.minutes == null ? null : w.minutes, crossing: !!w.crossing, flewOut: !!w.flewOut }; }));
     state.data = { items: items };
     renderControls(); draw(); renderPanel();
   }).catch(function () {
