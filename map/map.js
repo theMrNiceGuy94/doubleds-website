@@ -44,7 +44,7 @@
   placeTabs();
   (phoneQ.addEventListener ? phoneQ.addEventListener.bind(phoneQ, 'change') : phoneQ.addListener.bind(phoneQ))(function () { placeTabs(); if (state.data) { renderControls(); draw(); renderPanel(); } setTimeout(function () { map.invalidateSize(); }, 50); });
 
-  var map = L.map($('.cm-map'), { zoomSnap: 0.5, minZoom: 2, maxZoom: 13, scrollWheelZoom: false, worldCopyJump: true }).fitBounds(BOUNDS.uk);
+  var map = L.map($('.cm-map'), { zoomSnap: 0.5, minZoom: 1, maxZoom: 13, scrollWheelZoom: false, worldCopyJump: true }).fitBounds(BOUNDS.uk);
   L.tileLayer('https://api.maptiler.com/maps/streets-v2-dark/256/{z}/{x}/{y}.png?key=' + KEY, {
     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank" rel="noopener">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>',
     crossOrigin: true, maxZoom: 13,
@@ -56,6 +56,13 @@
   map.getContainer().addEventListener('mouseleave', function () { map.scrollWheelZoom.disable(); hint.style.opacity = 1; });
 
   var state = { year: -1, region: 'uk', sel: null, data: null, shop: [51.07, 0.77] };
+  // 25 Nov 2026 (Pati: no pin on Tonga): the whole-world box put the map's centre on the UK, so a pin near the date
+  // line (Tonga, -175) was off-screen. International now fits the places we actually have, plus the workshop.
+  function regionBounds(r) {
+    if (r !== 'intl' || !state.data) return BOUNDS[r];
+    var pts = state.data.items.filter(function (p) { return p.region === 'intl'; }).map(function (p) { return [p.lat, p.lng]; });
+    return pts.length ? L.latLngBounds(pts.concat([state.shop])).pad(0.15) : BOUNDS.intl;
+  }
   var routeL = L.layerGroup().addTo(map);
   var count = function (p) { return state.year < 0 || yIdx(p.year) === state.year; };
   function clusterGroup(dim) {
@@ -138,7 +145,7 @@
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'cm-tab'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', state.region === t[0]);
       b.innerHTML = t[1] + ' <span class="n">' + regionCount(t[0]) + '</span>';
-      b.onclick = function () { state.region = t[0]; if (state.sel) clearSel(); map.flyToBounds(BOUNDS[t[0]], { duration: 0.8 }); renderControls(); renderPanel(); };
+      b.onclick = function () { state.region = t[0]; if (state.sel) clearSel(); map.flyToBounds(regionBounds(t[0]), { duration: 0.8 }); renderControls(); renderPanel(); };
       tabs.appendChild(b);
     });
     var ys = $('.cm-years');
