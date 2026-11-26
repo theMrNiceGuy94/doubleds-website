@@ -85,6 +85,31 @@
   L.marker(state.shop, { interactive: false, keyboard: false, zIndexOffset: 2000, icon: L.divIcon({ className: '', html: '<div class="shop"><span class="garage">' + GARAGE + '</span><span class="lab">Our workshop</span></div>', iconSize: [0, 0], iconAnchor: [14, 24] }) }).addTo(map);
   map.on('click', function () { if (state.sel) clearSel(); });
 
+  // 26 Nov 2026 (Pati): on the Europe map, country borders in yellow so France, Belgium, the Netherlands stand out.
+  // The outlines (Natural Earth via world-atlas) load the first time Europe is opened.
+  var borderL = null, borderLoading = false;
+  function borders(on) {
+    if (!on) { if (borderL) map.removeLayer(borderL); return; }
+    if (borderL) { borderL.addTo(map); return; }
+    if (borderLoading) return;
+    borderLoading = true;
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js';
+    s.onload = function () {
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json').then(function (r) { return r.json(); }).then(function (topo) {
+        var lines = topojson.mesh(topo, topo.objects.countries, function (a, b) { return a !== b; });
+        var coast = topojson.mesh(topo, topo.objects.countries, function (a, b) { return a === b; });
+        borderL = L.layerGroup([
+          L.geoJSON(coast, { interactive: false, style: { color: '#FACC15', weight: 1, opacity: 0.35 } }),
+          L.geoJSON(lines, { interactive: false, style: { color: '#FACC15', weight: 1.6, opacity: 0.85 } }),
+        ]);
+        if (state.region === 'eu') borderL.addTo(map);
+      }).catch(function () { borderLoading = false; });
+    };
+    s.onerror = function () { borderLoading = false; };
+    document.head.appendChild(s);
+  }
+
   function townKey(p) { return (p.town || '').toLowerCase().trim() + '|' + p.region; }
   function icon(p, dim) {
     if (dim) return L.divIcon({ className: '', html: '<div class="pin dim"></div>', iconSize: [12, 12] });
@@ -92,7 +117,8 @@
   }
   function draw() {
     others.clearLayers(); chosen.clearLayers();
-    var all = state.data.items.filter(count);
+    // 26 Nov 2026 (Pati): the Europe map shows only the European pins (the UK ones crowded it).
+    var all = state.data.items.filter(function (p) { return count(p) && (state.region !== 'eu' || p.region === 'eu'); });
     var mk = function (p, dim) {
       var m = L.marker([p.lat, p.lng], { icon: icon(p, dim), keyboard: true, title: p.town + (p.wall ? '' : (p.firstName ? ' – ' + p.firstName : '')), townKey: townKey(p), zIndexOffset: dim ? -500 : 500 });
       m.on('click', function (ev) { L.DomEvent.stopPropagation(ev); select(townKey(p)); });
@@ -145,7 +171,7 @@
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'cm-tab'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', state.region === t[0]);
       b.innerHTML = t[1] + ' <span class="n">' + regionCount(t[0]) + '</span>';
-      b.onclick = function () { state.region = t[0]; if (state.sel) clearSel(); map.flyToBounds(regionBounds(t[0]), { duration: 0.8 }); renderControls(); renderPanel(); };
+      b.onclick = function () { state.region = t[0]; if (state.sel) clearSel(); map.flyToBounds(regionBounds(t[0]), { duration: 0.8 }); borders(t[0] === 'eu'); draw(); renderControls(); renderPanel(); };
       tabs.appendChild(b);
     });
     var ys = $('.cm-years');
